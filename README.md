@@ -1,1 +1,1 @@
-# FINe41660-Group-Project
+# FIN41660-Group-Project
