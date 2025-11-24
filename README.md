@@ -263,24 +263,3 @@ git push
 * The app is intended as a single series forecasting studio, not a multi asset system.
 * The Diebold Mariano test implementation is simplified and does not include HAC corrections. It is suitable for classroom model comparison but not for production use.
 * GARCH is estimated under a normal distribution. For heavy tailed assets you may want to experiment with Student t or skewed distributions in a future extension.
-
-```
-## Extra UI polish for `app.py`
-
-Your current app is already very strong. The code you just ran is fine to keep. The only extra polish I would suggest now is *very minor* and does not warrant another giant paste unless you want specific cosmetic tweaks.
-
-Given how much you have working, I would not keep churning the layout. From here, polish comes more from:
-
-- consistent naming in labels  
-- writing short, clear captions under key charts  
-- adjusting default hyperparameters sensibly for your asset (for example ARIMA(1,0,1), GARCH(1,1))  
-- being consistent between the app and the report, so what the examiner sees in the video matches what they read in the document.
-
-If you really want to push cosmetics a bit further, you can:
-
-- set a dark theme in `.streamlit/config.toml` (so the whole app uses a consistent dark mode)  
-- add one or two `st.expander` blocks for "What does ARIMA do" and "What does GARCH do" so the app itself is self contained as a teaching tool  
-- tighten some wording in the hero section and tab headings to match the style of your report title.
-
-If you want those specific config or expander snippets, say so and I will give you short, targeted code blocks rather than another full app rewrite.
-```
