@@ -10,24 +10,31 @@ def prepare_series(df: pd.DataFrame, date_col: str, value_col: str):
     Clean a price series and compute log returns.
 
     Handles:
-    - date parsing
+    - date parsing (robust to EU day-first and mixed formats)
     - sorting and indexing by date
     - thousands separators like '87,537.10'
+    - missing values
     """
     data = df[[date_col, value_col]].copy()
 
-    # parse dates
-    data[date_col] = pd.to_datetime(data[date_col], dayfirst=True)
+    # robust date parsing
+    # errors="coerce" prevents hard crashes if any row has an invalid date string
+    data[date_col] = pd.to_datetime(
+        data[date_col],
+        dayfirst=True,
+        errors="coerce",
+    )
+    data = data.dropna(subset=[date_col])
 
     # sort and index
     data = data.sort_values(date_col).set_index(date_col)
 
     # clean numeric column, remove commas etc
-    col = data[value_col].astype(str).str.replace(",", "").str.strip()
+    col = data[value_col].astype(str).str.replace(",", "", regex=False).str.strip()
     data[value_col] = pd.to_numeric(col, errors="coerce")
 
     # drop missing
-    data = data.dropna()
+    data = data.dropna(subset=[value_col])
 
     price = data[value_col]
     returns = np.log(price).diff().dropna()
