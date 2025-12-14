@@ -17,7 +17,7 @@ def prepare_series(df: pd.DataFrame, date_col: str, value_col: str):
     data = df[[date_col, value_col]].copy()
 
     # parse dates
-    data[date_col] = pd.to_datetime(data[date_col])
+    data[date_col] = pd.to_datetime(data[date_col], dayfirst=True)
 
     # sort and index
     data = data.sort_values(date_col).set_index(date_col)
